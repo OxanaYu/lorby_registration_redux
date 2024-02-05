@@ -1,13 +1,13 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
-import LoginForm from "../components/loginForm/LoginForm";
-import RegistrationForm from "../components/registration/RegistrationForm";
+import AuthRootComponent from "../components/AuthRootComponent";
 
 const MainRoutes = () => {
   return (
     <Routes>
-      <Route path="/" element={<LoginForm />} />
-      <Route path="/auth" element={<RegistrationForm />} />
+      <Route path="/" element={<AuthRootComponent />} />
+      <Route path="/register" element={<AuthRootComponent />} />
+      <Route path="/login" element={<AuthRootComponent />} />
     </Routes>
   );
 };
