@@ -7,10 +7,13 @@ export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (userObj) => {
     let formData = new FormData();
+    formData.append("email", userObj.email);
     formData.append("username", userObj.username);
     formData.append("password", userObj.password);
+    formData.append("password_confirm", userObj.password_confirm);
     let res = await axios.post(`${API}/register/`, formData);
     console.log(res);
+
     return res;
   }
 );
@@ -23,21 +26,15 @@ export const loginUser = createAsyncThunk("user/loginUser", async (userObj) => {
   return { res, userObj };
 });
 
-const initialState = {
-  user: null,
-  loading: false,
-  error: null,
-  status: "",
-};
-
 export const userSlice = createSlice({
   name: "user",
-  initialState,
+  initialState: {
+    user: null,
+    loading: false,
+    error: null,
+    status: "",
+  },
   reducers: {
-    login(state, action) {
-      state.user = action.payload;
-      state.loading = true;
-    },
     cleanErrorState: (state, action) => {
       state.error = null;
     },
@@ -83,6 +80,6 @@ export const userSlice = createSlice({
   },
 });
 
-export const { login, cleanErrorState, cleanStatusState, cleanUserState } =
+export const { cleanErrorState, cleanStatusState, cleanUserState } =
   userSlice.actions;
 export default userSlice.reducer;

@@ -12,6 +12,10 @@ const LoginForm = () => {
     password: "",
   });
 
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
+
   const { loading, status, error } = useSelector((state) => state.user);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -44,11 +48,13 @@ const LoginForm = () => {
                 className={styles.form__input}
                 type="text"
                 placeholder="Введи логин"
+                onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 className={styles.form__input}
                 type="text"
                 placeholder="Введи пароль"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button className={styles.form__button}>Войти</button>
             </form>
@@ -78,11 +84,13 @@ const LoginForm = () => {
                 className={styles.form__input}
                 type="text"
                 placeholder="Введи логин"
+                onChange={(e) => setUsername(e.target.value)}
               />
               <input
                 className={styles.form__input}
                 type="text"
                 placeholder="Введи пароль"
+                onChange={(e) => setPassword(e.target.value)}
               />
               <button className={styles.form__button}>Войти</button>
             </form>
