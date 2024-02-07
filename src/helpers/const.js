@@ -1,1 +1,1 @@
-export const API = "berlin-backender.org.kg/lorby/authentication";
+export const API = "https://berlin-backender.org.kg/lorby/authentication";

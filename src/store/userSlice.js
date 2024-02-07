@@ -2,29 +2,45 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API } from "../helpers/const";
 import { addDataToLocalStorage } from "../helpers/functions";
+import { useNavigate } from "react-router-dom";
 
 export const registerUser = createAsyncThunk(
   "user/registerUser",
   async (userObj) => {
-    let formData = new FormData();
-    formData.append("email", userObj.email);
-    formData.append("username", userObj.username);
-    formData.append("password", userObj.password);
-    formData.append("password_confirm", userObj.password_confirm);
-    let res = await axios.post(`${API}/register/`, formData);
-    console.log(res);
+    console.log("`${API}/register/`", `${API}/register/`);
+    let res = await axios.post(`${API}/register/`, {
+      email: userObj.email,
+      username: userObj.username,
+      password: userObj.password,
+      password_confirm: userObj.password_confirm,
+    });
+    console.log("res", res);
+
+    console.log("res", res.status);
+    console.log("res", res.statusText);
 
     return res;
   }
 );
 
 export const loginUser = createAsyncThunk("user/loginUser", async (userObj) => {
-  let formData = new FormData();
-  formData.append("username", userObj.username);
-  formData.append("password", userObj.password);
-  let res = await axios.post(`${API}/login`, formData);
+  let res = await axios.post(`${API}/login/`, {
+    username: userObj.username,
+    password: userObj.password,
+  });
+  console.log("res after login", res);
   return { res, userObj };
 });
+
+export const checkUserEmail = createAsyncThunk(
+  "user/email-confirm",
+  async (confirmCode) => {
+    console.log("confirmCode", confirmCode);
+    let res = await axios.post(`${API}/email-confirm/`, { code: confirmCode });
+    console.log("res after email confirm", res);
+    return { res };
+  }
+);
 
 export const userSlice = createSlice({
   name: "user",
