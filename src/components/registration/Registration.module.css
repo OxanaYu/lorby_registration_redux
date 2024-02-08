@@ -1,11 +1,16 @@
 * {
   margin: 0;
   padding: 0;
+  font-family: "M PLUS 1p", sans-serif;
+  color: mediumgrey;
 }
 
 .main {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
+
 .image {
   width: 50%;
   height: 100vh;
@@ -15,18 +20,21 @@
   justify-content: center;
 }
 
-.form {
-  width: 50%;
-  height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+.image__top {
+  width: 480px;
+  height: 510px;
 }
 
-form {
-  display: flex;
-  flex-direction: column;
+.image__lorby {
+  font-family: "M PLUS 1p", sans-serif;
+  font-weight: 500;
+  font-size: 48px;
+  margin-top: 40px;
+}
+.image__text {
+  margin-top: 10px;
+  font-weight: 400;
+  font-size: 28px;
 }
 
 li {
@@ -34,10 +42,18 @@ li {
   font-size: 12px;
 }
 
-.error_message {
-  color: red; /* Красный цвет текста */
+.form {
+  height: 554px;
+  width: 343px;
 }
 
-.errors.password_confirm {
-  border-color: red; /* Красная рамка для поля ввода */
+.form__header {
+  font-weight: 500;
+  font-size: 32px;
+}
+
+.form__text {
+  font-weight: 500;
+  font-size: 32px;
+  margin-bottom: 48px;
 }

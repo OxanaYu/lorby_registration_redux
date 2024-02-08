@@ -1,0 +1,23 @@
+.default {
+  display: flex;
+  align-items: center;
+  padding-top: 2px;
+}
+
+.password {
+  font-size: 12px;
+  padding-left: 14px;
+  color: #da2626;
+}
+
+.normal {
+  color: #a7a1a1;
+}
+
+.pass {
+  color: #0d9f0d;
+}
+
+.error {
+  color: #da2626;
+}

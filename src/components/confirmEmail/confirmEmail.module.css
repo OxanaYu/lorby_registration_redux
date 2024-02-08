@@ -7,6 +7,8 @@
 
 .main {
   display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .image {
@@ -35,71 +37,55 @@
   font-size: 28px;
 }
 
+.form__main_text {
+  font-weight: 500;
+  font-size: 24px;
+  text-align: center;
+  color: rgb(34, 33, 33);
+  margin-bottom: 40px;
+}
+
 .form {
-  width: 50%;
-  height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
 }
 
-FormControl {
+.codeInputContainer {
   display: flex;
-  flex-direction: column;
-  margin-top: 48px;
-  margin-bottom: 48px;
+  justify-content: center;
+  align-items: center;
 }
-
-.form__text {
-  font-weight: 500;
-  font-size: 32px;
-}
-
 .form__input {
-  background-color: rgb(249, 247, 247);
-  width: 343px;
-  height: 52px;
+  height: 64px;
+  width: 56px;
   border: none;
   border-radius: 12px;
-  margin-bottom: 13px;
-  text-indent: 20px;
-  font-size: 15px;
-  letter-spacing: 1;
-}
-
-Input {
-  text-indent: 20px;
-  font-size: 14px;
-}
-
-Input::placeholder {
-  text-indent: 20px;
-
-  font-family: "M PLUS 1p", sans-serif;
-  color: rgb(152, 151, 151);
+  background-color: rgb(235, 233, 233);
+  margin-right: 12px;
 }
 
 .form__input::placeholder {
-  text-indent: 20px;
+  color: black;
+  pointer-events: none;
+  font-weight: 700;
+  position: absolute;
+  top: 28px;
 }
 
-.form__button {
-  margin-top: 48px;
+button {
+  background-color: rgb(218, 216, 216);
   width: 343px;
-  height: 52px;
+  height: 50px;
   border: none;
   border-radius: 12px;
-  color: white;
-  background-color: #292929;
-}
-
-.form__bottom_link {
-  text-decoration: none;
-  color: inherit;
+  margin-top: 60px;
+  font-size: 16px;
+  color: rgb(42, 42, 42);
+  margin-bottom: 30px;
 }
 
 .form__bottom_text {
-  font-size: 15px;
-  color: mediumgrey;
+  text-decoration: none;
+  color: rgb(14, 14, 14);
 }

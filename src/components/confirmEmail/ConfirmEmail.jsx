@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import styles from "../loginForm/loginForm.module.css";
+import styles from "./confirmEmail.module.css";
 import illustration from "../assets/illustration.png";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -9,7 +9,7 @@ import * as Yup from "yup";
 
 const ConfirmEmail = () => {
   const [inputValues, setInputValues] = useState(["", "", "", ""]);
-  const [placeholder, setPlaceholder] = useState(["-", "", "", ""]);
+  const [placeholder, setPlaceholder] = useState(["__", "", "", ""]);
   const navigate = useNavigate();
 
   const handleInputChange = (index, value) => {
@@ -19,7 +19,7 @@ const ConfirmEmail = () => {
 
     if (value !== "" && index < 3) {
       const newPlaceholder = [...placeholder];
-      newPlaceholder[index + 1] = "-";
+      newPlaceholder[index + 1] = "__";
       setPlaceholder(newPlaceholder);
     }
   };
@@ -59,15 +59,17 @@ const ConfirmEmail = () => {
         </div>
         <div className={styles.form}>
           <div className={styles.form__main_title}>
-            <p>Введите 4-значный код, высланный на почту</p>
+            <p className={styles.form__main_text}>
+              Введи 4-значный код, <br /> высланный на <br /> почту
+            </p>
           </div>
           <Formik
             initialValues={{ code1: "", code2: "", code3: "", code4: "" }}
             validationSchema={Yup.object().shape({
-              code1: Yup.string().required("Введите код"),
-              code2: Yup.string().required("Введите код"),
-              code3: Yup.string().required("Введите код"),
-              code4: Yup.string().required("Введите код"),
+              code1: Yup.string().required(""),
+              code2: Yup.string().required(""),
+              code3: Yup.string().required(""),
+              code4: Yup.string().required(""),
             })}
           >
             {({ isSubmitting, isValid }) => (

@@ -4,12 +4,17 @@ import illustration from "../assets/illustration.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { FaEye, FaEyeSlash } from "react-icons/fa";
+
 import {
   cleanErrorState,
   cleanStatusState,
   loginUser,
 } from "../../store/userSlice";
+import { FormControl, IconButton, Input, InputAdornment } from "@mui/material";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const LoginForm = () => {
   const [user, setUser] = useState({
@@ -24,15 +29,25 @@ const LoginForm = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    dispatch(cleanErrorState());
-    dispatch(cleanStatusState());
-  }, []);
+  const notify = () => {
+    toast.error("Неверный логин или пароль");
+  };
+
+  // useEffect(() => {
+  //   dispatch(cleanErrorState());
+  //   dispatch(cleanStatusState());
+  // }, []);
   const handleLogin = (e) => {
     e.preventDefault();
     dispatch(loginUser(user));
     console.log(status);
-    status === 201 ? navigate("/confirm-email") : navigate("/register");
+    status === "Success!" ? navigate("/logged") : notify();
+  };
+
+  const handleClickShowPassword = () => setShowPassword((show) => !show);
+
+  const handleMouseDownPassword = (event) => {
+    event.preventDefault();
   };
 
   return (
@@ -47,14 +62,27 @@ const LoginForm = () => {
             <p className={styles.image__text}>Твой личный репетитор</p>
           </div>
         </div>
-        <h2>{error}</h2>
+
         <div className={styles.form}>
+          <ToastContainer className={styles.toastContainer} />
+
           <div className={styles.form__main_title}>
-            <p>Вэлком бэк!</p>
+            <p className={styles.form__text}>Вэлком бэк!</p>
           </div>
-          <form className={styles.form__registraition} action="">
-            <input
+          <FormControl
+            sx={{
+              display: "flex",
+              flexDirection: "column",
+              marginTop: "48px",
+              marginBottom: "48px",
+            }}
+            className={styles.form__registraition}
+            action=""
+          >
+            <Input
+              sx={{ fontSize: "15px", fontWeight: "regular", letterSpacing: 1 }}
               className={styles.form__input}
+              disableUnderline={true}
               type="text"
               placeholder="Введи логин"
               onChange={(e) =>
@@ -64,23 +92,37 @@ const LoginForm = () => {
                 })
               }
             />
-            <input
+            <Input
+              sx={{ fontSize: "15px", fontWeight: "regular", letterSpacing: 1 }}
               className={styles.form__input}
               type={showPassword ? "text" : "password"}
               placeholder="Введи пароль"
+              disableUnderline={true}
               onChange={(e) =>
                 setUser({
                   ...user,
                   password: e.target.value,
                 })
               }
+              endAdornment={
+                <InputAdornment position="start">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={handleMouseDownPassword}
+                    edge="start"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              }
             />
             <button onClick={handleLogin} className={styles.form__button}>
               Войти
             </button>
-          </form>
-          <NavLink to="/register" className={styles.form__bottom_text}>
-            <p>У меня еще нет аккаунта</p>
+          </FormControl>
+          <NavLink to="/register" className={styles.form__bottom_link}>
+            <p className={styles.form__bottom_text}>У меня еще нет аккаунта</p>
           </NavLink>
         </div>
       </div>
