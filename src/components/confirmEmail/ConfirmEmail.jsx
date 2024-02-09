@@ -3,9 +3,10 @@ import styles from "./confirmEmail.module.css";
 import illustration from "../assets/illustration.png";
 import { useDispatch } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-import { checkUserEmail } from "../../store/userSlice";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { checkUserEmail } from "../../store/actions";
+import { Formik, Form, Field } from "formik";
 import * as Yup from "yup";
+import WrongCodeError from "../error-handle/WrongCodeError";
 
 const ConfirmEmail = () => {
   const [inputValues, setInputValues] = useState(["", "", "", ""]);
@@ -31,6 +32,7 @@ const ConfirmEmail = () => {
 
   const handleSubmit = () => {
     dispatch(checkUserEmail(code));
+
     setInputValues(["", "", "", ""]);
   };
 
@@ -126,11 +128,7 @@ const ConfirmEmail = () => {
                     onChange={(e) => handleInputChange(3, e.target.value)}
                   />
                 </div>
-                <ErrorMessage
-                  name="code1"
-                  component="div"
-                  className={styles.errorMsg}
-                />
+                <WrongCodeError />
                 <button
                   type="submit"
                   // disabled={isSubmitting || !isValid}

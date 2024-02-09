@@ -4,12 +4,7 @@ import illustration from "../assets/illustration.png";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, useNavigate } from "react-router-dom";
-
-import {
-  cleanErrorState,
-  cleanStatusState,
-  loginUser,
-} from "../../store/userSlice";
+import { loginUser } from "../../store/actions";
 import { FormControl, IconButton, Input, InputAdornment } from "@mui/material";
 import Visibility from "@mui/icons-material/Visibility";
 import VisibilityOff from "@mui/icons-material/VisibilityOff";
@@ -24,7 +19,7 @@ const LoginForm = () => {
 
   const [showPassword, setShowPassword] = useState(false);
 
-  const { status, error } = useSelector((state) => state.user);
+  const { error, status } = useSelector(({ userSlice }) => userSlice);
   console.log(status);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -107,6 +102,7 @@ const LoginForm = () => {
               endAdornment={
                 <InputAdornment position="start">
                   <IconButton
+                    className={styles.adornment}
                     aria-label="toggle password visibility"
                     onClick={handleClickShowPassword}
                     onMouseDown={handleMouseDownPassword}

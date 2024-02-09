@@ -1,46 +1,6 @@
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import axios from "axios";
-import { API } from "../helpers/const";
+import { createSlice } from "@reduxjs/toolkit";
 import { addDataToLocalStorage } from "../helpers/functions";
-import { useNavigate } from "react-router-dom";
-
-export const registerUser = createAsyncThunk(
-  "user/registerUser",
-  async (userObj) => {
-    console.log("`${API}/register/`", `${API}/register/`);
-    let res = await axios.post(`${API}/register/`, {
-      email: userObj.email,
-      username: userObj.username,
-      password: userObj.password,
-      password_confirm: userObj.password_confirm,
-    });
-    console.log("res", res);
-
-    console.log("res", res.status);
-    console.log("res", res.statusText);
-
-    return res;
-  }
-);
-
-export const loginUser = createAsyncThunk("user/loginUser", async (userObj) => {
-  let res = await axios.post(`${API}/login/`, {
-    username: userObj.username,
-    password: userObj.password,
-  });
-  console.log("res after login", res);
-  return { res, userObj };
-});
-
-export const checkUserEmail = createAsyncThunk(
-  "user/email-confirm",
-  async (confirmCode) => {
-    console.log("confirmCode", confirmCode);
-    let res = await axios.post(`${API}/email-confirm/`, { code: confirmCode });
-    console.log("res after email confirm", res);
-    return { res };
-  }
-);
+import { registerUser, loginUser, checkUserEmail } from "./actions";
 
 export const userSlice = createSlice({
   name: "user",
@@ -48,16 +8,17 @@ export const userSlice = createSlice({
     user: null,
     loading: false,
     error: null,
+    wrongCodeError: null,
     status: "",
   },
   reducers: {
-    cleanErrorState: (state, action) => {
+    cleanErrorState: (state) => {
       state.error = null;
     },
-    cleanStatusState: (state, action) => {
+    cleanStatusState: (state) => {
       state.status = "";
     },
-    cleanUserState: (state, action) => {
+    cleanUserState: (state) => {
       state.user = null;
     },
   },
@@ -69,12 +30,10 @@ export const userSlice = createSlice({
       })
       .addCase(registerUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.status = action.payload.data;
+        state.status = action.payload;
       })
       .addCase(registerUser.rejected, (state, action) => {
-        state.loading = false;
-        console.log(action);
-        state.error = action.error.name;
+        state.loading = false; // Ошибка возвращается с сервера
       })
       .addCase(loginUser.pending, (state, action) => {
         state.error = null;
@@ -82,16 +41,27 @@ export const userSlice = createSlice({
       })
       .addCase(loginUser.fulfilled, (state, action) => {
         state.loading = false;
-        state.user = action.payload.userObj;
         state.status = "Success!";
-        addDataToLocalStorage(
-          action.payload.userObj.username,
-          action.payload.res.data
-        );
+        addDataToLocalStorage(action.payload.res.data);
       })
       .addCase(loginUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error.name;
+      })
+      .addCase(checkUserEmail.pending, (state, action) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(checkUserEmail.fulfilled, (state, action) => {
+        console.log("action", action.payload);
+        if (action.payload.error) {
+          state.wrongCodeError = true;
+        }
+        state.loading = false;
+      })
+      .addCase(checkUserEmail.rejected, (state, action) => {
+        state.loading = false;
+        state.wrongCodeError = true;
+        console.log("reducer checkUserEmail called");
       });
   },
 });

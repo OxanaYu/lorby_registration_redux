@@ -72,7 +72,7 @@ img {
   font-weight: 400;
   font-size: 16px;
   margin-top: 24px;
-  margin-bottom: 24px;
+  /* margin-bottom: 24px; */
 }
 
 .modal__logout_out {
@@ -83,6 +83,8 @@ img {
   background-color: #292929;
   color: white;
   font-size: 13px;
+  margin-top: 30px;
+  margin-bottom: 40px;
 }
 
 .modal__logout_in {
@@ -91,7 +93,7 @@ img {
   border: none;
   font-size: 13px;
   background-color: white;
-  margin: 2px 0;
+  margin: -30px 0;
 }
 
 /* Стили для родительского элемента, когда модальное окно открыто */

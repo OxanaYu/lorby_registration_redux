@@ -11,11 +11,8 @@ import InputLabel from "@mui/material/InputLabel";
 import InputAdornment from "@mui/material/InputAdornment";
 import OutlinedInput from "@mui/material/OutlinedInput";
 import TextField from "@mui/material/TextField";
-import {
-  cleanErrorState,
-  cleanStatusState,
-  registerUser,
-} from "../../store/userSlice";
+import { cleanErrorState, cleanStatusState } from "../../store/userSlice";
+import { registerUser } from "../../store/actions";
 import { Formik, Form } from "formik";
 import IconButton from "@mui/material/IconButton";
 import FormControl from "@mui/material/FormControl";
@@ -33,8 +30,7 @@ const RegistrationForm = () => {
     event.preventDefault();
   };
 
-  const { error } = useSelector((state) => state.user);
-  const status = useSelector((state) => state.user.status);
+  const { error, status } = useSelector(({ userSlice }) => userSlice);
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -149,7 +145,6 @@ const RegistrationForm = () => {
                 <FormControl
                   sx={{
                     m: 1,
-
                     backgroundColor: "rgb(249, 247, 247)",
                     border: "none",
                     borderRadius: "12px",
@@ -172,6 +167,7 @@ const RegistrationForm = () => {
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
+                          className={styles.adornment}
                           aria-label="toggle password visibility"
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
@@ -192,7 +188,6 @@ const RegistrationForm = () => {
                   fullWidth
                   style={{
                     m: 1,
-
                     backgroundColor: "rgb(249, 247, 247)",
                     border: "none",
                     borderRadius: "12px",
@@ -215,6 +210,7 @@ const RegistrationForm = () => {
                     endAdornment={
                       <InputAdornment position="end">
                         <IconButton
+                          className={styles.adornment}
                           aria-label="toggle password visibility"
                           onClick={handleClickShowPassword}
                           onMouseDown={handleMouseDownPassword}
