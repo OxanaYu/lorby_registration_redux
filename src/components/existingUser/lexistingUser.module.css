@@ -51,14 +51,11 @@ img {
   border: 1px solid black;
   position: absolute;
   z-index: 1000;
+  top: 50%; /* Положение модального окна по вертикали */
+  left: 50%; /* Положение модального окна по горизонтали */
+  transform: translate(-50%, -50%); /* Центрирование модального окна */
 
-  top: 235px;
-  visibility: hidden;
-}
-
-.modal.visible {
-  visibility: visible;
-  background-color: white;
+  background-color: white; /* Цвет фона модального окна */
 }
 
 .modal__header {
@@ -72,7 +69,6 @@ img {
   font-weight: 400;
   font-size: 16px;
   margin-top: 24px;
-  /* margin-bottom: 24px; */
 }
 
 .modal__logout_out {
@@ -96,14 +92,17 @@ img {
   margin: -30px 0;
 }
 
-/* Стили для родительского элемента, когда модальное окно открыто */
-.modal-open {
-  position: relative;
-}
+/* .modal__logout_out,
+.modal__logout_in {
+  width: 311px;
+  height: 50px;
+  border: none;
+  font-size: 13px;
+  margin-top: 20px; 
+} */
 
-/* Затемняющий фон */
 .overlay {
-  position: absolute;
+  position: fixed; /* Позиционирование фона модального окна */
   top: 0;
   left: 0;
   width: 100%;

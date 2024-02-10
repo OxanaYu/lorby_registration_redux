@@ -23,24 +23,12 @@ export const registerUser = createAsyncThunk(
 );
 
 export const loginUser = createAsyncThunk("user/loginUser", async (userObj) => {
-  try {
-    let res = await axios.post(`${API}/login/`, {
-      username: userObj.username,
-      password: userObj.password,
-    });
-    console.log("res after login", res);
-    // Проверяем, что в ответе есть токены
-    if (res.data && res.data.refresh && res.data.access) {
-      // Сохраняем токены в localStorage
-      localStorage.setItem("refreshToken", res.data.refresh);
-      localStorage.setItem("accessToken", res.data.access);
-    }
-
-    return { res, userObj };
-  } catch (error) {
-    // В случае ошибки можно обработать её здесь
-    throw error;
-  }
+  let res = await axios.post(`${API}/login/`, {
+    username: userObj.username,
+    password: userObj.password,
+  });
+  console.log("res after login", res);
+  return { res, userObj };
 });
 
 export const checkUserEmail = createAsyncThunk(

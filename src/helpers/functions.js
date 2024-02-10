@@ -41,23 +41,20 @@ export const validatePassword = (values) => {
 
 export const updateToken = () => {
   console.log("WORK");
-  let updateFunc = setInterval(
-    async () => {
-      const tokens = JSON.parse(localStorage.getItem("tokens"));
-      if (!tokens) return clearInterval(updateFunc);
-      const Authorization = `Bearer ${tokens.access}`;
-      let res = await axios.post(
-        `${API}/login/refresh/`,
-        { refresh: tokens.refresh },
-        { headers: { Authorization } },
-      );
-      localStorage.setItem(
-        "tokens",
-        JSON.stringify({ refresh: tokens.refresh, access: res.data.access }),
-      );
-    },
-    1000 * 60 * 9,
-  );
+  let updateFunc = setInterval(async () => {
+    const tokens = JSON.parse(localStorage.getItem("tokens"));
+    if (!tokens) return clearInterval(updateFunc);
+    const Authorization = `Bearer ${tokens.access}`;
+    let res = await axios.post(
+      `${API}/login/refresh/`,
+      { refresh: tokens.refresh },
+      { headers: { Authorization } }
+    );
+    localStorage.setItem(
+      "tokens",
+      JSON.stringify({ refresh: tokens.refresh, access: res.data.access })
+    );
+  }, 1000 * 60 * 9);
 };
 
 export const logout = () => {

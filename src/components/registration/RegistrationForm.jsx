@@ -40,6 +40,7 @@ const RegistrationForm = () => {
   }, []);
 
   const handleSubmit = (values, { setSubmitting }) => {
+    console.log("submitted");
     dispatch(registerUser(values));
     setSubmitting(false);
   };
@@ -100,14 +101,18 @@ const RegistrationForm = () => {
           <p className={styles.form__text}>Lorby</p>
         </div>
         <Formik
-          onSubmit={formik.handleSubmit}
+          onSubmit={(values, { setSubmitting }) => {
+            handleSubmit(values, { setSubmitting });
+          }}
           initialValues={formik.initialValues}
+          validationSchema={validationSchema}
         >
           {({ isSubmitting }) => (
             <Form className={styles.form__registraition} action="">
               <Stack spacing={2}>
-                <TextField
-                  sx={{
+                <OutlinedInput
+                  className={styles.form__input}
+                  style={{
                     m: 1,
 
                     backgroundColor: "rgb(249, 247, 247)",
@@ -117,13 +122,14 @@ const RegistrationForm = () => {
                   fullWidth
                   id="email"
                   name="email"
-                  label="Введи адрес почты"
+                  placeholder="Введи адрес почты"
                   value={formik.values.email}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
                   error={formik.touched.email && Boolean(formik.errors.email)}
                 />
-                <TextField
+                <OutlinedInput
+                  className={styles.form__input}
                   sx={{
                     m: 1,
 
@@ -134,7 +140,7 @@ const RegistrationForm = () => {
                   fullWidth
                   id="username"
                   name="username"
-                  label="Придумай логин"
+                  placeholder="Придумай логин"
                   value={formik.values.username}
                   onChange={formik.handleChange}
                   onBlur={formik.handleBlur}
@@ -150,15 +156,13 @@ const RegistrationForm = () => {
                     borderRadius: "12px",
                   }}
                   fullWidth
-                  variant="outlined"
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Создай пароль
-                  </InputLabel>
                   <OutlinedInput
+                    style={{ borderRadius: "12px" }}
                     value={formik.values.password}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    placeholder="Создай пароль"
                     error={
                       formik.touched.password && Boolean(formik.errors.password)
                     }
@@ -177,7 +181,6 @@ const RegistrationForm = () => {
                         </IconButton>
                       </InputAdornment>
                     }
-                    label="Password"
                   />
                 </FormControl>
                 <ErrorHandle
@@ -194,13 +197,12 @@ const RegistrationForm = () => {
                     marginTop: "22px",
                   }}
                 >
-                  <InputLabel htmlFor="outlined-adornment-password">
-                    Создай пароль
-                  </InputLabel>
                   <OutlinedInput
+                    style={{ borderRadius: "12px" }}
                     value={formik.values.password_confirm}
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
+                    placeholder="Повтори пароль"
                     error={
                       formik.touched.password_confirm &&
                       Boolean(formik.errors.password_confirm)
@@ -230,6 +232,7 @@ const RegistrationForm = () => {
                     color: "grey",
                     height: "50px",
                     border: "none",
+                    borderRadius: "12px",
                   }}
                   type="submit"
                   disabled={isSubmitting}

@@ -59,7 +59,11 @@ const LoginForm = () => {
         </div>
 
         <div className={styles.form}>
-          <ToastContainer className={styles.toastContainer} />
+          <ToastContainer
+            position="top-center"
+            toastClassName={styles.toastmessage}
+            bodyClassName={styles.toastContainer}
+          />
 
           <div className={styles.form__main_title}>
             <p className={styles.form__text}>Вэлком бэк!</p>
@@ -69,7 +73,7 @@ const LoginForm = () => {
               display: "flex",
               flexDirection: "column",
               marginTop: "48px",
-              marginBottom: "48px",
+              marginBottom: "10px",
             }}
             className={styles.form__registraition}
             action=""
@@ -87,6 +91,8 @@ const LoginForm = () => {
                 })
               }
             />
+          </FormControl>
+          <FormControl>
             <Input
               sx={{ fontSize: "15px", fontWeight: "regular", letterSpacing: 1 }}
               className={styles.form__input}

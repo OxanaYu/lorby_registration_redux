@@ -61,3 +61,13 @@ li {
 .adornment {
   width: 35px;
 }
+
+.form__input {
+  border-radius: 12px;
+}
+
+.form__main_title {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
